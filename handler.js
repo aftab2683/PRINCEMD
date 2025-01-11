@@ -138,10 +138,11 @@ if (!('antiFacebook' in chat)) chat.antiFacebook = false
 if (!('antiInstagram' in chat)) chat.antiInstagram = false
 if (!('antiTwitter' in chat)) chat.antiTwitter = false
 if (!('antiDiscord' in chat)) chat.antiDiscord = false
-if (!('antiThreads' in chat)) chat.antiThreads = false
+if (!('antiThreads' in chat)) chat.antiThreads = false 
 if (!('antiTwitch' in chat)) chat.antiTwitch = false
 if (!('antifake' in chat)) chat.antifake = false
 if (!("detect" in chat)) chat.detect = true
+if (!("autoapprove" in chat)) chat.autoapprove = false
 if (!("getmsg" in chat)) chat.getmsg = true
 if (!("isBanned" in chat)) chat.isBanned = false
 if (!("nsfw" in chat)) chat.nsfw = false
@@ -183,6 +184,7 @@ antiTwitch: false,
 antifake: false,
 antiBotClone: false,
 detect: true,
+autoapprove: false,
 expired: 0,
 getmsg: true,
 isBanned: false,

@@ -1,28 +1,50 @@
+import google from 'google-it';
+import axios from 'axios';
 
-import fetch from 'node-fetch'
-import googleIt from 'google-it'
-let handler = async (m, { conn, usedPrefix, command, args }) => {
-  let full = /f$/i.test(command)
-  let text = args.join` `
-  if (!text) return conn.reply(m.chat, `✳️ What do you want to search on Google?`, m)
- m.react(rwait)
-  let url = 'https://google.com/search?q=' + encodeURIComponent(text)
-  let search = await googleIt({ query: text })
-  let msg = search.map(({ title, link, snippet}) => {
-    return `*${title}*\n_${link}_\n_${snippet}_`
-  }).join`\n\n`
+let handler = async (m, { conn, command, args, usedPrefix }) => {
+  const fetch = (await import('node-fetch')).default;
+  const text = args.join` `;
+  if (!text) return m.reply(`⚠️ What are you searching for? 🤔 Please type what you want to search for.\n• Example: ${usedPrefix + command} cats`);
+  m.react("⌛");
+
   try {
-    let ss = await (await fetch(global.API('nrtm', '/api/ssweb', { delay: 1000, url, full }))).arrayBuffer()
-    if (/<!DOCTYPE html>/i.test(ss.toBuffer().toString())) throw ''
-    await conn.sendFile(m.chat, ss, 'screenshot.png', msg, m)
-    m.react(done)
-  } catch (e) {
-    m.reply(msg)
-  }
-}
-handler.help = ['google']
-handler.tags = ['tools']
-handler.command = ['google', 'googlef'] 
-handler.diamond = false
+    const res = await fetch(`https://api.example.com/search/googlesearch?query=${encodeURIComponent(text)}`);
+    const data = await res.json();
 
-export default handler
+    if (data.status && data.data && data.data.length > 0) {
+      let resultText = `🔍 *Search Results for:* ${text}\n\n`;
+      for (let result of data.data.slice(0, 5)) { // Limiting to 5 results
+        resultText += `*${result.title}*\n_${result.url}_\n_${result.description}_\nWebsite Link: _${result.website}_\n\n─────────────────\n\n`;
+      }
+
+      const screenshot = `https://image.thum.io/get/fullpage/https://google.com/search?q=${encodeURIComponent(text)}`;
+      conn.sendFile(m.chat, screenshot, 'result.png', resultText, m, false);
+      m.react("✅");
+      handler.limit = 1;
+    }
+  } catch (error) {
+    try {
+      const url = 'https://google.com/search?q=' + encodeURIComponent(text);
+      google({ query: text }).then(results => {
+        let resultText = `🔍 *Search Results for:* ${text}\n\n*${url}*\n\n`;
+        for (let g of results.slice(0, 5)) { // Limiting to 5 results
+          resultText += `_${g.title}_\n_${g.link}_\n_${g.snippet}_\nWebsite Link: _${g.link}_\n\n─────────────────\n\n`;
+        }
+        const screenshot = `https://image.thum.io/get/fullpage/${url}`;
+        conn.sendFile(m.chat, screenshot, 'error.png', resultText, m, false);
+      });
+      m.react("✅");
+      handler.limit = 1;
+    } catch (e) {
+      handler.limit = 0;
+      console.error(e);
+      m.react("❌");
+    }
+  }
+};
+
+handler.help = ['google', 'googlef'].map(v => v + ' <search term>');
+handler.tags = ['study'];
+handler.command = /^googlef?$/i;
+handler.register = false;
+export default handler;

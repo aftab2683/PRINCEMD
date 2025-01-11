@@ -286,6 +286,19 @@ break
       chat.testf = isEnable
       break
 
+		  case 'approve':
+		  case 'ap':
+    case 'autoapprove':
+    case 'approveauto':
+      if (m.isGroup) {
+        if (!(isAdmin || isOwner)) {
+          global.dfail('admin', m, conn)
+          throw false
+        }
+      }
+      chat.autoapprove = isEnable
+      break
+
 
 		  case 'antifake':
     case 'fake':
@@ -617,6 +630,9 @@ default:
 🖼️ *\`${usedPrefix + command} autosticker\`*  
    ➤ Automatically create stickers from images and videos
 
+✅ *\`${usedPrefix + command} autoapprove\`*  
+   ➤ Enable autoapprove and reject to group
+   
 🔢 *\`${usedPrefix + command} antifake\`*  
    ➤ Enable antifake to group
 
