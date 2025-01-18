@@ -39,6 +39,7 @@
     "@whiskeysockets/baileys": "git+https://github.com/DASTAGHIR/Baileys.git#master",
     "acrcloud": "^1.4.0",
     "api-dylux": "^1.7.2",
+    "@bochilteam/scraper": "^5.0.1",
     "awesome-phonenumber": "^2.68.0",
     "axios": "^1.1.2",
     "mathjs": "^11.3.0",
@@ -58,7 +59,7 @@
     "file-type": "^18.0.0",
     "fg-ig": "^0.0.2",
     "figlet": "^1.7.0",
-    "fluent-ffmpeg": "^2.1.2",
+    "fluent-ffmpeg": "^2.1.3",
     "formdata-node": "^4.3.2",
     "fs-extra": "^11.1.0",
     "groq-sdk": "^0.8.0",
@@ -87,7 +88,7 @@
     "md5": "^2.3.0",
     "moment-timezone": "^0.5.34",
     "mongoose": "^8.9.4",
-    "node-fetch": "^3.2.10",
+    "node-fetch": "^3.3.2",
     "node-gtts": "^2.0.2",
     "node-webpmux": "^3.1.1",
     "node-os-utils": "^1.3.6",
@@ -120,7 +121,7 @@
     "@xct007/frieren-scraper": "^0.0.2"
   },
     "optionalDependencies": {
-    "cheerio": "npm:cheerio@1.0.0-rc.12",
-    "@bochilteam/scraper": "^4.2.4"
+    "cheerio": "npm:cheerio@1.0.0-rc.12"
+    
   }
 }
